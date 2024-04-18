@@ -3,9 +3,8 @@
 A Runelite plugin that notifies you via text-to-speech sound that you are currently idle.
 
 ## Currently Supported
-Woodcutting
-
-Forester Firemaking
+- Woodcutting
+- Forester Firemaking
 
 Cooking
 
