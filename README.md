@@ -4,7 +4,9 @@ A Runelite plugin that notifies you via text-to-speech sound that you are curren
 
 ## Currently Supported
 Woodcutting
+
 Forester Firemaking
+
 Cooking
 Crafting (Gem Cutting, Glassblowing, Spinning, Weaving, Battlestaves, Pottery, Smelting Jewelry)
 Fletching (Cutting, Stringing, Adding feathers and heads)
