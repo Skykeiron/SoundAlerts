@@ -159,6 +159,7 @@ public class SoundAlertsPlugin extends Plugin
 			case GEM_CUTTING_EMERALD:
 			case GEM_CUTTING_RUBY:
 			case GEM_CUTTING_DIAMOND:
+			case 885: // Dragonstone Gems
 			case GEM_CUTTING_AMETHYST:
 			case CRAFTING_GLASSBLOWING:
 			case CRAFTING_SPINNING:
@@ -195,6 +196,7 @@ public class SoundAlertsPlugin extends Plugin
 			case SMITHING_ANVIL:
 			case SMITHING_IMCANDO_HAMMER:
 			case SMITHING_SMELTING:
+			case 3243://Smelting Jewellery
 			case SMITHING_CANNONBALL:
 				/* Fishing */
 			case FISHING_CRUSHING_INFERNAL_EELS:
