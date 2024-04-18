@@ -2,8 +2,6 @@ package com.soundalerts.config;
 
 import com.soundalerts.SoundAlertsConfig;
 
-import java.util.ArrayList;
-
 public class Sounds {
 
     public enum SoundFiles {

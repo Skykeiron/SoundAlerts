@@ -1,0 +1,109 @@
+package com.soundalerts.config;
+
+import com.soundalerts.SoundAlertsConfig;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.client.RuneLite;
+
+import javax.sound.sampled.*;
+import java.io.*;
+import java.util.HashMap;
+
+@Slf4j
+public class SoundPlayer
+{
+    private HashMap<String, Clip> clips = new HashMap<String, Clip>();
+    private float volume = 1f;
+
+    public void tryLoadAudio(SoundAlertsConfig config, String clipName)
+    {
+        if (config.audioMode() == SoundMode.Disabled)
+            return;
+        tryLoadClip(config.audioMode(), clipName);
+    }
+
+    public void unloadAudio()
+    {
+        for (Clip clip : clips.values())
+        {
+            clip.stop();
+            clip.flush();
+            clip.close();
+        }
+
+        clips.clear();
+    }
+
+    public synchronized void playSoundClip(String sound)
+    {
+        if (clips.containsKey(sound))
+        {
+            Clip clip = clips.get(sound);
+            clip.setFramePosition(0);
+            clip.start();
+        }
+    }
+
+    public void setVolume(int volume)
+    {
+        float volumeF = volume / 100f;
+        volumeF = Math.max(volumeF, 0f);
+        volumeF = Math.min(volumeF, 2f);
+
+        if (this.volume != volumeF)
+        {
+            this.volume = volumeF;
+
+            for (Clip clip : clips.values())
+            {
+                setClipVolume(clip);
+            }
+        }
+    }
+
+    private boolean tryLoadClip(SoundMode audioMode, String clipName)
+    {
+        if (audioMode == SoundMode.Custom)
+        {
+            final File customFile = new File(RuneLite.RUNELITE_DIR, clipName);
+
+            try (
+                    InputStream fileStream = new BufferedInputStream(new FileInputStream(customFile));
+                    AudioInputStream sound = AudioSystem.getAudioInputStream(fileStream))
+            {
+                Clip clip = AudioSystem.getClip();
+                clips.put(clipName, clip);
+                clip.open(sound);
+                setClipVolume(clip);
+                return true;
+            }
+            catch (UnsupportedAudioFileException | IOException | LineUnavailableException | SecurityException ex)
+            {
+                log.error("Unable to load sound " + clipName, ex);
+            }
+        }
+
+        try (
+                InputStream audioSource = getClass().getResourceAsStream(clipName);
+                BufferedInputStream bufferedStream = new BufferedInputStream(audioSource);
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(bufferedStream))
+        {
+            Clip clip = AudioSystem.getClip();
+            clips.put(clipName, clip);
+            clip.open(audioInputStream);
+            setClipVolume(clip);
+            return true;
+        }
+        catch (UnsupportedAudioFileException | IOException | LineUnavailableException | SecurityException ex)
+        {
+            log.error("Unable to load sound " + clipName, ex);
+        }
+
+        return false;
+    }
+
+    private void setClipVolume(Clip clip)
+    {
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(20f * (float) Math.log10(volume));
+    }
+}

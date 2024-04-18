@@ -2,7 +2,6 @@ package com.soundalerts;
 
 import com.soundalerts.config.SoundMode;
 import net.runelite.client.config.*;
-import net.runelite.client.plugins.PluginDescriptor;
 
 @ConfigGroup(SoundAlertsConfig.CONFIG_GROUP)
 public interface SoundAlertsConfig extends Config
