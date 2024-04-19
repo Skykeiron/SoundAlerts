@@ -3,6 +3,8 @@
 A Runelite plugin that notifies you via text-to-speech sound that you are currently idle.
 
 ## Currently Supported
+
+# Animations
 - Woodcutting
 - Forester Firemaking
 - Cooking
@@ -15,3 +17,6 @@ A Runelite plugin that notifies you via text-to-speech sound that you are curren
 - Magic (Charging Orbs, Plank Make, String Jewelry, Tablets Making, Enchanting Jewelry, Enchanting Bolts, Bake Pie)
 - Prayer
 - Farming
+
+# Experience Drops
+You are able to set a delay which triggers a notification if you haven't received an Experience Drop for that period of time.
