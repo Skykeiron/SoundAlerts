@@ -391,7 +391,7 @@ public class SoundAlertsPlugin extends Plugin
 		if (previous != null)
 		{
 			last_experience = xp - previous;
-			if (last_experience != 0) {
+			if (last_experience != 0 && (config.getExperienceThreshold() < last_experience)) {
 				time = currentTimeMillis();
 				notify_idle = false;
 			}

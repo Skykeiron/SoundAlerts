@@ -75,10 +75,21 @@ public interface SoundAlertsConfig extends Config
 		return true;
 	}
 	@ConfigItem(
+			keyName = "minimumxp",
+			name = "Minimum XP",
+			description = "The amount of experience drop required to send a notification. A value of 0 will count all XP drops..",
+			position = 1,
+			section = experienceNotificationsSection
+	)
+	default int getExperienceThreshold()
+	{
+		return 0;
+	}
+	@ConfigItem(
 			keyName = "xpnotificationsdelay",
 			name = "XP Notification Delay",
 			description = "The notification delay after the player has not gained experience.",
-			position = 1,
+			position = 2,
 			section = experienceNotificationsSection
 	)
 	@Units(Units.MILLISECONDS)
