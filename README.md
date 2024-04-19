@@ -24,5 +24,5 @@ A Runelite plugin that notifies you via text-to-speech sound that you are curren
 ## Combat
 - A notification for when your health drops under a customizable amount.
 - A notification for when your prayer drops under a customizable amount.
-- 
+
 ![img.png](img.png)
