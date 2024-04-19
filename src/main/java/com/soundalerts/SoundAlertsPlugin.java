@@ -8,9 +8,7 @@ import com.soundalerts.config.SoundPlayer;
 import com.soundalerts.config.Sounds;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
-import net.runelite.api.events.AnimationChanged;
-import net.runelite.api.events.GameStateChanged;
-import net.runelite.api.events.GameTick;
+import net.runelite.api.events.*;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
@@ -21,6 +19,9 @@ import static net.runelite.api.AnimationID.*;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Map;
 
 import static net.runelite.api.AnimationID.IDLE;
 
@@ -342,6 +343,8 @@ public class SoundAlertsPlugin extends Plugin
 	private void onGameTick(GameTick event) {
 		final Player local = client.getLocalPlayer();
 		final Duration waitDuration = Duration.ofMillis(config.getIdleNotificationDelay());
+		long diff = (currentTimeMillis() - time);
+
 		if (delay == 8)
 			delay = 0;
 		/* Hitpoints Alert */
@@ -359,7 +362,38 @@ public class SoundAlertsPlugin extends Plugin
 		{
 			playSoundClip(config.audioMode() == SoundMode.Female ? Sounds.SoundFiles.IDLE_FEMALE.getPath() : Sounds.SoundFiles.IDLE_MALE.getPath());
 		}
+
+		if ((diff > config.getExperienceNotificationDelay() && !notify_idle) && config.experience()) {
+			playSoundClip(config.audioMode() == SoundMode.Female ? Sounds.SoundFiles.IDLE_FEMALE.getPath() : Sounds.SoundFiles.IDLE_MALE.getPath());
+			notify_idle = true;
+		}
 		delay++;
+	}
+
+	private final Map<Skill, Integer> last_xp = new EnumMap<>(Skill.class);
+	private Skill lastSkill = null;
+	private int last_experience;
+	private long time;
+	boolean notify_idle;
+
+
+
+	@Subscribe
+	public void onStatChanged(StatChanged stat)
+	{
+
+		final Skill skill = stat.getSkill();
+		final int xp = stat.getXp();
+
+		lastSkill = skill;
+
+		Integer previous = last_xp.put(skill, xp);
+		if (previous != null)
+		{
+			last_experience = xp - previous;
+			time = currentTimeMillis();
+			notify_idle = false;
+		}
 	}
 
 	@Subscribe
@@ -417,6 +451,16 @@ public class SoundAlertsPlugin extends Plugin
 		{
 			lastAnimation = IDLE;
 		}
+	}
+
+	private static long timeCorrection;
+	private static long lastTimeUpdate;
+	public static synchronized long currentTimeMillis() {
+		long l = System.currentTimeMillis();
+		if (l < lastTimeUpdate)
+			timeCorrection += lastTimeUpdate - l;
+		lastTimeUpdate = l;
+		return l + timeCorrection;
 	}
 
 	@Provides

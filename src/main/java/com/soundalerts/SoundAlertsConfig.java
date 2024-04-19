@@ -10,19 +10,32 @@ public interface SoundAlertsConfig extends Config
 	String CONFIG_GROUP = "soundalerts";
 
 	//Sections
-
 	@ConfigSection(
-			name = "Idle Notifications",
-			description = "Idle Notification section.",
+			name = "Animation Notifications",
+			description = "Animation Notification section.",
 			position = 0,
 			closedByDefault = false
 	)
-	String idleNotificationsSection = "idleNotifications";
+	String animationNotificationsSection = "animationNotifications";
+	@ConfigSection(
+			name = "Experience Notifications",
+			description = "Experience Notification section.",
+			position = 1,
+			closedByDefault = false
+	)
+	String experienceNotificationsSection = "experienceNotifications";
+	@ConfigSection(
+			name = "Combat Notifications",
+			description = "Combat Notification section.",
+			position = 2,
+			closedByDefault = false
+	)
+	String combatNotificationsSection = "combatNotifications";
 
 	@ConfigSection(
 			name = "Sound Settings",
 			description = "Sound Settings section.",
-			position = 1,
+			position = 2,
 			closedByDefault = true
 	)
 	String soundSettingsSection = "soundSettingsNotifications";
@@ -32,18 +45,18 @@ public interface SoundAlertsConfig extends Config
 			name = "Idle Animation Notifications",
 			description = "Configures if idle animation notifications are enabled",
 			position = 0,
-			section = idleNotificationsSection
+			section = animationNotificationsSection
 	)
-	default Notification animationIdle()
+	default boolean animationIdle()
 	{
-		return Notification.ON;
+		return true;
 	}
 	@ConfigItem(
 			keyName = "timeout",
 			name = "Idle Notification Delay",
 			description = "The notification delay after the player is idle",
 			position = 2,
-			section = idleNotificationsSection
+			section = animationNotificationsSection
 	)
 	@Units(Units.MILLISECONDS)
 	default int getIdleNotificationDelay()
@@ -51,11 +64,35 @@ public interface SoundAlertsConfig extends Config
 		return 2500;
 	}
 	@ConfigItem(
+			keyName = "xpnotifications",
+			name = "XP Notifications",
+			description = "Configures if Experience notifications are enabled",
+			position = 0,
+			section = experienceNotificationsSection
+	)
+	default boolean experience()
+	{
+		return true;
+	}
+	@ConfigItem(
+			keyName = "xpnotificationsdelay",
+			name = "XP Notification Delay",
+			description = "The notification delay after the player has not gained experience.",
+			position = 1,
+			section = experienceNotificationsSection
+	)
+	@Units(Units.MILLISECONDS)
+	default int getExperienceNotificationDelay()
+	{
+		return 2500;
+	}
+
+	@ConfigItem(
 			keyName = "hitpoints",
 			name = "Hitpoints Threshold",
 			description = "The amount of hitpoints to send a notification at. A value of 0 will disable notification.",
-			position = 3,
-			section = idleNotificationsSection
+			position = 0,
+			section = combatNotificationsSection
 	)
 	default int getHitpointsThreshold()
 	{
@@ -66,8 +103,8 @@ public interface SoundAlertsConfig extends Config
 			keyName = "prayer",
 			name = "Prayer Threshold",
 			description = "The amount of prayer points to send a notification at. A value of 0 will disable notification.",
-			position = 4,
-			section = idleNotificationsSection
+			position = 1,
+			section = combatNotificationsSection
 	)
 	default int getPrayerThreshold()
 	{
