@@ -47,6 +47,11 @@ public class SoundAlertsPlugin extends Plugin
 	private int lastAnimation = IDLE;
 
 	int delay = 0;
+	private final Map<Skill, Integer> last_xp = new EnumMap<>(Skill.class);
+	private Skill lastSkill = null;
+	private int last_experience;
+	private long time;
+	boolean notify_idle;
 
 	@Override
 	protected void startUp() throws Exception
@@ -345,6 +350,7 @@ public class SoundAlertsPlugin extends Plugin
 		final Duration waitDuration = Duration.ofMillis(config.getIdleNotificationDelay());
 		long diff = (currentTimeMillis() - time);
 
+		/* Delay for only notifying if health or prayer is under x amount every 5 seconds or so. */
 		if (delay == 8)
 			delay = 0;
 		/* Hitpoints Alert */
@@ -358,30 +364,24 @@ public class SoundAlertsPlugin extends Plugin
 				playSoundClip(config.audioMode() == SoundMode.Female ? Sounds.SoundFiles.PRAYER_FEMALE.getPath() : Sounds.SoundFiles.HEALTH_MALE.getPath());
 		}
 
+		/* Idle Animation Alert */
 		if (checkAnimationIdle(waitDuration, local))
 		{
 			playSoundClip(config.audioMode() == SoundMode.Female ? Sounds.SoundFiles.IDLE_FEMALE.getPath() : Sounds.SoundFiles.IDLE_MALE.getPath());
 		}
 
+		/* Xp Drop Alert */
 		if ((diff > config.getExperienceNotificationDelay() && !notify_idle) && config.experience()) {
 			playSoundClip(config.audioMode() == SoundMode.Female ? Sounds.SoundFiles.IDLE_FEMALE.getPath() : Sounds.SoundFiles.IDLE_MALE.getPath());
 			notify_idle = true;
 		}
+
 		delay++;
 	}
-
-	private final Map<Skill, Integer> last_xp = new EnumMap<>(Skill.class);
-	private Skill lastSkill = null;
-	private int last_experience;
-	private long time;
-	boolean notify_idle;
-
-
 
 	@Subscribe
 	public void onStatChanged(StatChanged stat)
 	{
-
 		final Skill skill = stat.getSkill();
 		final int xp = stat.getXp();
 
@@ -391,8 +391,10 @@ public class SoundAlertsPlugin extends Plugin
 		if (previous != null)
 		{
 			last_experience = xp - previous;
-			time = currentTimeMillis();
-			notify_idle = false;
+			if (last_experience != 0) {
+				time = currentTimeMillis();
+				notify_idle = false;
+			}
 		}
 	}
 
