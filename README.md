@@ -2,9 +2,9 @@
 # Sound Alerts
 A Runelite plugin that notifies you via text-to-speech sound that you are currently idle.
 
-## Currently Supported
+## Currently Supported Features
 
-# Animations
+## Animations
 - Woodcutting
 - Forester Firemaking
 - Cooking
@@ -18,5 +18,9 @@ A Runelite plugin that notifies you via text-to-speech sound that you are curren
 - Prayer
 - Farming
 
-# Experience Drops
-You are able to set a delay which triggers a notification if you haven't received an Experience Drop for that period of time.
+## Experience Drops
+- A notification if you haven't received an Experience Drop for that period of time.
+
+## Combat
+- A notification for when your health drops under a customizable amount.
+- A notification for when your prayer drops under a customizable amount.
