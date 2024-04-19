@@ -22,7 +22,6 @@ A Runelite plugin that notifies you via text-to-speech sound that you are curren
 - A notification if you haven't received an Experience Drop for that period of time.
 
 ## Combat
-- A notification for when your health drops under a customizable amount.
-- A notification for when your prayer drops under a customizable amount.
+- A notification for when your Hitpoints & Prayer drop under a certain threshhold.
 
 ![img.png](img.png)
