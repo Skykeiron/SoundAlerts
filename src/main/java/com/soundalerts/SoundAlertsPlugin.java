@@ -365,7 +365,7 @@ public class SoundAlertsPlugin extends Plugin
 		}
 
 		/* Idle Animation Alert */
-		if (checkAnimationIdle(waitDuration, local))
+		if (checkAnimationIdle(waitDuration, local) && config.animationIdle())
 		{
 			playSoundClip(config.audioMode() == SoundMode.Female ? Sounds.SoundFiles.IDLE_FEMALE.getPath() : Sounds.SoundFiles.IDLE_MALE.getPath());
 		}
