@@ -24,4 +24,12 @@ A Runelite plugin that notifies you via text-to-speech sound that you are curren
 ## Combat
 - A notification for when your Hitpoints & Prayer drop under a certain threshhold.
 
+## Setting Custom Sounds
+1. Navigate to your .runelite Directory in c:/users/*YOUR USER*/.runelite/
+2. Make a folder named "audio" and put your desired TTS files in there with the following names for whichever sound you would like to replace.
+- "health_male"
+- "prayer_male" 
+- "idle_male"
+3. **Note**: Only .wav files are supported.
+
 ![img.png](img.png)
