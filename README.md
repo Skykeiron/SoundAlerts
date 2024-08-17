@@ -30,6 +30,7 @@ A Runelite plugin that notifies you via text-to-speech sound that you are curren
 - "health_male" - Replaces the "health" notification TTS
 - "prayer_male" - Replaces the "prayer" notification TTS
 - "idle_male" - Replaces the "idle" notification TTS
-3. **Note**: Only .wav files are supported.
+3. Reload the plugin by turning it off then back on for changes to take effect.
+4. **Note**: Only .wav files are supported.
 
 ![img.png](img.png)
