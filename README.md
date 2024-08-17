@@ -27,9 +27,9 @@ A Runelite plugin that notifies you via text-to-speech sound that you are curren
 ## Setting Custom Sounds
 1. Navigate to your .runelite Directory in c:/users/*YOUR USER*/.runelite/
 2. Make a folder named "audio" and put your desired TTS files in there with the following names for whichever sound you would like to replace.
-- "health_male"
-- "prayer_male" 
-- "idle_male"
+- "health_male" - Replaces the "health" notification TTS
+- "prayer_male" - Replaces the "prayer" notification TTS
+- "idle_male" - Replaces the "idle" notification TTS
 3. **Note**: Only .wav files are supported.
 
 ![img.png](img.png)
