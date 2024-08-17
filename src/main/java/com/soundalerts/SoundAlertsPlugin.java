@@ -361,7 +361,7 @@ public class SoundAlertsPlugin extends Plugin
 		/* Prayer Alert */
 		if (config.getPrayerThreshold() > 0) {
 			if (client.getBoostedSkillLevel(Skill.PRAYER) <= config.getPrayerThreshold() && delay == 0)
-				playSoundClip(config.audioMode() == SoundMode.Female ? Sounds.SoundFiles.PRAYER_FEMALE.getPath() : Sounds.SoundFiles.HEALTH_MALE.getPath());
+				playSoundClip(config.audioMode() == SoundMode.Female ? Sounds.SoundFiles.PRAYER_FEMALE.getPath() : Sounds.SoundFiles.PRAYER_MALE.getPath());
 		}
 
 		/* Idle Animation Alert */
